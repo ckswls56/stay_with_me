@@ -4,12 +4,12 @@ import com.dgu.stay_with_me.model.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 
-    public List<Room> findByRoomId(int id);
-    public List<Room> findByRoomName(String name);
-    public List<Room> findByRoomPrice(int price);
+    public Optional<Room> findByRoomName(String name);
+    public Optional<Room> findByRoomPrice(int price);
 
 }

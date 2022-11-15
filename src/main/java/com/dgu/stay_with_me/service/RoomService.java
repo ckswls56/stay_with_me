@@ -24,6 +24,15 @@ public class RoomService {
         Optional<Room> room = roomRepository.findById(roomId);
         return room;
     }
+    public Optional<Room> findByName(String roomName){
+        Optional<Room> room = roomRepository.findByRoomName(roomName);
+        return room;
+    }
+
+    public Optional<Room> findByPrice(int roomPrice){
+        Optional<Room> room = roomRepository.findByRoomPrice(roomPrice);
+        return room;
+    }
 
     public void deleteById(int roomId){
         roomRepository.deleteById(roomId);

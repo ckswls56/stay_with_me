@@ -39,6 +39,12 @@ public class RoomController {
         Optional<Room> room = roomService.findById(roomId);
         return new ResponseEntity<Room>(room.get(),HttpStatus.OK);
     }
+    //roomName으로 조회
+    @GetMapping(value = "/name/{roomName}")
+    public ResponseEntity<Room> getRoom(@PathVariable("roomName")String roomName){
+        Optional<Room> room = roomService.findByName(roomName);
+        return new ResponseEntity<Room>(room.get(),HttpStatus.OK);
+    }
 
     // roomId로 방 삭제
     @DeleteMapping(value = "/{roomId}")

@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -34,8 +36,8 @@ public class Payment {
     @Column(nullable = false)
     private  String cardCompany ;
 
-    @CreationTimestamp
-    private Date confirmedDate ;
+    @UpdateTimestamp
+    private LocalDateTime confirmedDate ;
 
     @ColumnDefault("true")
     private Boolean type ; // 1이면 예약 0이면 취소
