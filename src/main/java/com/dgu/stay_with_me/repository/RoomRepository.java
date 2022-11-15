@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 
-    public List<Room> findById(String id);
-    public List<Room> findByName(String name);
-    public List<Room> findByCost(int price);
+    public List<Room> findByRoomId(int id);
+    public List<Room> findByRoomName(String name);
+    public List<Room> findByRoomPrice(int price);
 
 }

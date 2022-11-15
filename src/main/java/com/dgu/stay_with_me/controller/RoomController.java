@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -28,6 +29,10 @@ public class RoomController {
     public ResponseEntity<List<Room>> getAllRooms(){
         List<Room> rooms = roomService.findAll();
         return new ResponseEntity<List<Room>>(rooms, HttpStatus.OK);
+    }
+    @PostMapping
+    public ResponseEntity<Room> save(Room room){
+        return new ResponseEntity<Room>(roomService.save(room),HttpStatus.OK);
     }
 
 }
