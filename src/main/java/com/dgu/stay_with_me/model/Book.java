@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -24,9 +25,10 @@ public class Book {
     @JoinColumn(name="roomId")
     private int roomId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime checkInDate;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime checkOutDate;
 

@@ -31,8 +31,8 @@ public class BookService {
     }
     
     // checkIn , checkOut 기준으로 조회
-    public Optional<Book> findAllByCheckInDateBetween(LocalDateTime start, LocalDateTime end){
-        Optional<Book> book = bookRepository.findAllByCheckInDateBetween(start,end);
+    public Optional<Book> findAllByCheckInDateAfterOrCheckOutDateBefore(LocalDateTime start, LocalDateTime end){
+        Optional<Book> book = bookRepository.findAllByCheckInDateAfterOrCheckOutDateBefore(start,end);
         return book;
     }
     
