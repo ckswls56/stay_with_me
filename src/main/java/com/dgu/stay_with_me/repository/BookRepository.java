@@ -15,4 +15,5 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
     public Optional<Book> findById(int bookId);
     public Optional<Book> findAllByCheckInDateAfterOrCheckOutDateBefore(LocalDateTime start, LocalDateTime end);
     public Optional<Book> findByUserName(String userName);
+
 }

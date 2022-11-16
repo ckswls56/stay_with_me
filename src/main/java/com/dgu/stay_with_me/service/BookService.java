@@ -55,15 +55,18 @@ public class BookService {
         Optional<Book> e = bookRepository.findById(bookId);
 
         if(e.isPresent()){
-            e.get().setBookId(book.getBookId());
+            //e.get().setBookId(book.getBookId());
             e.get().setRoomId(book.getRoomId());
             e.get().setCheckInDate(book.getCheckInDate());
             e.get().setCheckOutDate(book.getCheckOutDate());
-            e.get().setUserName(book.getUserName());
-            e.get().setUserPhone(book.getUserPhone());
+            //e.get().setUserName(book.getUserName());
+            //e.get().setUserPhone(book.getUserPhone());
             e.get().setBookOption(book.getBookOption());
             e.get().setBookPrice(book.getBookPrice());
-            e.get().setPaymentId(book.getPaymentId());
+            //e.get().setPaymentId(book.getPaymentId());
+            //e.get().setCardNum(book.getCardNum());
+            //e.get().setCardCompany(book.getCardCompany());
+            //e.get().setConfirmedDate(book.getConfirmedDate());
         }
     }
 

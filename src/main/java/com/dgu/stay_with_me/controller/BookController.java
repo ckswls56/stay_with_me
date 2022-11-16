@@ -40,6 +40,7 @@ public class BookController {
         Optional<Book> book = bookService.findAllByCheckInDateAfterOrCheckOutDateBefore(start,end);
         return new ResponseEntity<Optional<Book>>(book,HttpStatus.OK);
     }
+    // 예약정보 입력
     @PostMapping
     public ResponseEntity<Book> save(Book book){
         return new ResponseEntity<Book>(bookService.save(book),HttpStatus.OK);
