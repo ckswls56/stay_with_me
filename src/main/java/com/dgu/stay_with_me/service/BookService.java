@@ -1,10 +1,8 @@
 package com.dgu.stay_with_me.service;
 
 import com.dgu.stay_with_me.model.Book;
-import com.dgu.stay_with_me.model.Room;
 import com.dgu.stay_with_me.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,10 +27,14 @@ public class BookService {
         Optional<Book> book = bookRepository.findById(bookId);
         return book;
     }
+    public Optional<Book> findByBookIdAndCardNum(int bookId, String cardNum){
+        Optional<Book> book = bookRepository.findByBookIdAndCardNum(bookId,cardNum);
+        return book;
+    }
     
     // checkIn , checkOut 기준으로 조회
-    public Optional<Book> findAllByCheckInDateAfterOrCheckOutDateBefore(LocalDateTime start, LocalDateTime end){
-        Optional<Book> book = bookRepository.findAllByCheckInDateAfterOrCheckOutDateBefore(start,end);
+    public List<Book> findAllByCheckInDateAfterAndCheckOutDateBefore(LocalDateTime start, LocalDateTime end){
+        List<Book> book = bookRepository.findAllByCheckInDateAfterAndCheckOutDateBefore(start,end);
         return book;
     }
     
@@ -41,6 +43,7 @@ public class BookService {
         Optional<Book> book = bookRepository.findByUserName(userName);
         return book;
     }
+
 
     public void deleteById(int bookId){
         bookRepository.deleteById(bookId);

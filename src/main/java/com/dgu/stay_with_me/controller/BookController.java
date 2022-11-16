@@ -1,6 +1,7 @@
 package com.dgu.stay_with_me.controller;
 
 import com.dgu.stay_with_me.model.Book;
+import com.dgu.stay_with_me.model.Room;
 import com.dgu.stay_with_me.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -33,17 +33,39 @@ public class BookController {
         return new ResponseEntity<Book>(book.get(),HttpStatus.OK);
     }
 
+    // 예약id and CardNum 조회
+    @GetMapping("/check")
+    public ResponseEntity<Book> getBook(@RequestParam(value = "bookId") Integer bookId,@RequestParam(value = "cardNum") String cardNum){
+        Optional<Book> book = bookService.findByBookIdAndCardNum(bookId,cardNum);
+        return new ResponseEntity<Book>(book.get(),HttpStatus.OK);
+    }
+
     // 시작날짜와 끝날짜로 조회 시작날짜와 끝날짜 사이에있으면 조회됨.
     @GetMapping("/date")
-    public ResponseEntity<Optional<Book>> getBook(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "start")LocalDateTime start,
+    public ResponseEntity<List<Book>> getBook(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "start")LocalDateTime start,
                                                   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "end") LocalDateTime end){
-        Optional<Book> book = bookService.findAllByCheckInDateAfterOrCheckOutDateBefore(start,end);
-        return new ResponseEntity<Optional<Book>>(book,HttpStatus.OK);
+        List<Book> book = bookService.findAllByCheckInDateAfterAndCheckOutDateBefore(start,end);
+        return new ResponseEntity<List<Book>>(book,HttpStatus.OK); //필터
     }
+
     // 예약정보 입력
     @PostMapping
     public ResponseEntity<Book> save(Book book){
         return new ResponseEntity<Book>(bookService.save(book),HttpStatus.OK);
+    }
+
+    //bookId 삭제
+    @DeleteMapping(value = "/{bookId}")
+    public ResponseEntity<Room> deleteRoom(@PathVariable("bookId") Integer roomId){
+        bookService.deleteById(roomId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //bookId로 수정
+    @PutMapping(value = {"/{bookId}"})
+    public ResponseEntity<Book> updateRoom(@PathVariable("bookId") Integer bookId,Book book){
+        bookService.updateById(bookId,book);
+        return new ResponseEntity<Book>(book,HttpStatus.OK);
     }
 
 

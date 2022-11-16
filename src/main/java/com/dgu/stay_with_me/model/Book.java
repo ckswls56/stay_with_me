@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @NoArgsConstructor
@@ -23,7 +24,6 @@ public class Book {
     private int bookId; //pk
 
     @Column(nullable = false)
-    @JoinColumn(name="roomId")
     private int roomId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -42,11 +42,8 @@ public class Book {
     @Column
     private String bookOption;
 
-    @Column(nullable = false)
+    @Column()
     private int bookPrice;
-    
-    @Column(nullable = false)
-    private int paymentId;
 
     @Column(nullable = false)
     private  String cardNum ;
@@ -54,6 +51,7 @@ public class Book {
     @Column(nullable = false)
     private  String cardCompany ;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @UpdateTimestamp
     private LocalDateTime confirmedDate ;
 }

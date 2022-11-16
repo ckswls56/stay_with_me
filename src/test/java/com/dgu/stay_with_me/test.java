@@ -11,6 +11,4 @@ import java.util.logging.Logger;
 public class test {
     LocalDateTime start = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.of(0,0,0));
     LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.of(23,59,59));
-
-
 }
