@@ -33,11 +33,16 @@ public class BookService {
     }
     
     // checkIn , checkOut 기준으로 조회
-    public List<Book> findAllByCheckInDateAfterAndCheckOutDateBefore(LocalDateTime start, LocalDateTime end){
-        List<Book> book = bookRepository.findAllByCheckInDateAfterAndCheckOutDateBefore(start,end);
+    public List<Book> findAllByCheckInDateBetween(LocalDateTime start, LocalDateTime end){
+        List<Book> book = bookRepository.findAllByCheckInDateBetween(start,end);
         return book;
     }
-    
+
+    public List<Book> findAllByCheckOutDateBetween(LocalDateTime start, LocalDateTime end){
+        List<Book> book = bookRepository.findAllByCheckOutDateBetween(start,end);
+        return book;
+    }
+
     // username 으로 조회
     public Optional<Book> findByUserName(String userName){
         Optional<Book> book = bookRepository.findByUserName(userName);
@@ -70,6 +75,7 @@ public class BookService {
             //e.get().setCardNum(book.getCardNum());
             //e.get().setCardCompany(book.getCardCompany());
             //e.get().setConfirmedDate(book.getConfirmedDate());
+            bookRepository.save(e.get());
         }
     }
 

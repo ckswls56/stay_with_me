@@ -52,7 +52,7 @@ public class RoomService {
             e.get().setRoomPrice(room.getRoomPrice());
             e.get().setRoomCapacity(room.getRoomCapacity());
             e.get().setRoomDetail(room.getRoomDetail());
-
+            roomRepository.save(e.get());
         }
     }
 }

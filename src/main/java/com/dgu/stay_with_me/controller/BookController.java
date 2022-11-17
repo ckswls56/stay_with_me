@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,10 +43,13 @@ public class BookController {
 
     // 시작날짜와 끝날짜로 조회 시작날짜와 끝날짜 사이에있으면 조회됨.
     @GetMapping("/date")
-    public ResponseEntity<List<Book>> getBook(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "start")LocalDateTime start,
+    public ResponseEntity<LinkedHashSet<Book>> getBook(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "start")LocalDateTime start,
                                                   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "end") LocalDateTime end){
-        List<Book> book = bookService.findAllByCheckInDateAfterAndCheckOutDateBefore(start,end);
-        return new ResponseEntity<List<Book>>(book,HttpStatus.OK); //필터
+        List<Book> book = bookService.findAllByCheckInDateBetween(start,end);
+        List<Book> book2 = bookService.findAllByCheckOutDateBetween(start,end);
+        LinkedHashSet set = new LinkedHashSet(book);
+        set.addAll(book2);
+        return new ResponseEntity<LinkedHashSet<Book>>(set,HttpStatus.OK); //필터
     }
 
     // 예약정보 입력
@@ -56,8 +60,8 @@ public class BookController {
 
     //bookId 삭제
     @DeleteMapping(value = "/{bookId}")
-    public ResponseEntity<Room> deleteRoom(@PathVariable("bookId") Integer roomId){
-        bookService.deleteById(roomId);
+    public ResponseEntity<Room> deleteRoom(@PathVariable("bookId") Integer bookId){
+        bookService.deleteById(bookId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
