@@ -46,7 +46,8 @@ public class BookController {
     // 시작날짜와 끝날짜로 조회 시작날짜와 끝날짜 사이에있으면 조회됨. 비어있는 방들 반환
     @GetMapping("/date")
     public ResponseEntity<List<Room>> getBook(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "start")LocalDateTime start,
-                                                  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "end") LocalDateTime end){
+                                                  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "end") LocalDateTime end,
+                                              Integer capacity){
         List<Book> book = bookService.findAllByCheckInDateBetween(start,end);
         List<Book> book2 = bookService.findAllByCheckOutDateBetween(start,end);
         //예약된 방 번호들
@@ -60,6 +61,7 @@ public class BookController {
         for(Integer i : reservedRoomIds){
             rooms.removeIf(room -> room.getRoomId() == i);
         }
+        rooms.removeIf(room -> room.getRoomCapacity() < capacity);
 
         return new ResponseEntity<List<Room>>(rooms,HttpStatus.OK); //필터
     }
