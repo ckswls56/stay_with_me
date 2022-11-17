@@ -3,6 +3,7 @@ package com.dgu.stay_with_me.controller;
 import com.dgu.stay_with_me.model.Book;
 import com.dgu.stay_with_me.model.Room;
 import com.dgu.stay_with_me.service.BookService;
+import com.dgu.stay_with_me.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -10,16 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("book")
 public class BookController {
     @Autowired
     BookService bookService;
+    @Autowired
+    RoomService roomService;
 
     //모든 예약정보 조회
     @GetMapping()
@@ -41,15 +43,25 @@ public class BookController {
         return new ResponseEntity<Book>(book.get(),HttpStatus.OK);
     }
 
-    // 시작날짜와 끝날짜로 조회 시작날짜와 끝날짜 사이에있으면 조회됨.
+    // 시작날짜와 끝날짜로 조회 시작날짜와 끝날짜 사이에있으면 조회됨. 비어있는 방들 반환
     @GetMapping("/date")
-    public ResponseEntity<LinkedHashSet<Book>> getBook(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "start")LocalDateTime start,
+    public ResponseEntity<List<Room>> getBook(@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "start")LocalDateTime start,
                                                   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")@RequestParam(value = "end") LocalDateTime end){
         List<Book> book = bookService.findAllByCheckInDateBetween(start,end);
         List<Book> book2 = bookService.findAllByCheckOutDateBetween(start,end);
-        LinkedHashSet set = new LinkedHashSet(book);
-        set.addAll(book2);
-        return new ResponseEntity<LinkedHashSet<Book>>(set,HttpStatus.OK); //필터
+        //예약된 방 번호들
+        Set<Integer> reservedRoomIds = new LinkedHashSet<>();
+        for(Book b : book)
+            reservedRoomIds.add(b.getRoomId());
+        for(Book b : book2)
+            reservedRoomIds.add(b.getRoomId());
+
+        List<Room> rooms = roomService.findAll();
+        for(Integer i : reservedRoomIds){
+            rooms.removeIf(room -> room.getRoomId() == i);
+        }
+
+        return new ResponseEntity<List<Room>>(rooms,HttpStatus.OK); //필터
     }
 
     // 예약정보 입력

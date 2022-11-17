@@ -30,6 +30,7 @@ public class RoomController {
     @GetMapping()
     public ResponseEntity<List<Room>> getAllRooms(){
         List<Room> rooms = roomService.findAll();
+        rooms.removeIf(room -> room.getRoomId() == 1);
         return new ResponseEntity<List<Room>>(rooms, HttpStatus.OK);
     }
     

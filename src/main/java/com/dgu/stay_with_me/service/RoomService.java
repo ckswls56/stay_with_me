@@ -34,6 +34,7 @@ public class RoomService {
         return room;
     }
 
+
     public void deleteById(int roomId){
         roomRepository.deleteById(roomId);
     }
