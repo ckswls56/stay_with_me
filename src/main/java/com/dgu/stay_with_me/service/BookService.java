@@ -32,12 +32,13 @@ public class BookService {
         return book;
     }
     
-    // checkIn , checkOut 기준으로 조회
+    // checkIn기준으로 조회
     public List<Book> findAllByCheckInDateBetween(LocalDateTime start, LocalDateTime end){
         List<Book> book = bookRepository.findAllByCheckInDateBetween(start,end);
         return book;
     }
 
+    // checkOut기준으로 조회
     public List<Book> findAllByCheckOutDateBetween(LocalDateTime start, LocalDateTime end){
         List<Book> book = bookRepository.findAllByCheckOutDateBetween(start,end);
         return book;
@@ -67,13 +68,12 @@ public class BookService {
             e.get().setRoomId(book.getRoomId());
             e.get().setCheckInDate(book.getCheckInDate());
             e.get().setCheckOutDate(book.getCheckOutDate());
-            //e.get().setUserName(book.getUserName());
-            //e.get().setUserPhone(book.getUserPhone());
+            e.get().setUserName(book.getUserName());
+            e.get().setUserPhone(book.getUserPhone());
             e.get().setBookOption(book.getBookOption());
             e.get().setBookPrice(book.getBookPrice());
-            //e.get().setPaymentId(book.getPaymentId());
-            //e.get().setCardNum(book.getCardNum());
-            //e.get().setCardCompany(book.getCardCompany());
+            e.get().setCardNum(book.getCardNum());
+            e.get().setCardCompany(book.getCardCompany());
             //e.get().setConfirmedDate(book.getConfirmedDate());
             bookRepository.save(e.get());
         }
