@@ -50,11 +50,15 @@ public class BookController {
                                               Integer capacity){
         List<Book> book = bookService.findAllByCheckInDateBetween(start,end);
         List<Book> book2 = bookService.findAllByCheckOutDateBetween(start,end);
+        List<Book> book3 = bookService.findAllByCheckInDateBeforeAndCheckOutDateAfter(start,end);
+
         //예약된 방 번호들
         Set<Integer> reservedRoomIds = new LinkedHashSet<>();
         for(Book b : book)
             reservedRoomIds.add(b.getRoomId());
         for(Book b : book2)
+            reservedRoomIds.add(b.getRoomId());
+        for(Book b : book3)
             reservedRoomIds.add(b.getRoomId());
 
         List<Room> rooms = roomService.findAll();

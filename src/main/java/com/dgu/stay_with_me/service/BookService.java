@@ -43,6 +43,10 @@ public class BookService {
         List<Book> book = bookRepository.findAllByCheckOutDateBetween(start,end);
         return book;
     }
+    public List<Book> findAllByCheckInDateBeforeAndCheckOutDateAfter(LocalDateTime start, LocalDateTime end){
+        List<Book> book = bookRepository.findAllByCheckInDateBeforeAndCheckOutDateAfter(start,end);
+        return book;
+    }
 
     // username 으로 조회
     public Optional<Book> findByUserName(String userName){
